@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balance — здоровое питание и подписка на готовые блюда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FDFBF6;
+    --beige:#F2EAD9;
+    --beige-soft:#F8F3E8;
+    --beige-deep:#E1D3B4;
+    --green:#5C7A3D;
+    --green-deep:#33461F;
+    --green-soft:#EAF0DF;
+    --gold:#BE9A4D;
+    --ink:#231F17;
+    --ink-soft:#726A59;
+    --white:#FFFFFF;
+    --shadow:0 20px 50px -25px rgba(35,31,23,0.35);
+    --shadow-sm:0 8px 24px -12px rgba(35,31,23,0.25);
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:10px;
+    --ease:cubic-bezier(.22,.9,.32,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{
+    max-width:100%;
+    overflow-x:hidden;
+  }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,h4{margin:0;font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-0.01em;}
+  p{margin:0;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  section{position:relative;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--green-deep);
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--green);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:16px 30px;border-radius:100px;
+    font-weight:700;font-size:.92rem;letter-spacing:.01em;
+    transition:transform .45s var(--ease),background .3s ease,color .3s ease,box-shadow .3s ease;
+  }
+  .btn-primary{background:var(--ink);color:var(--white);}
+  .btn-primary:hover{background:var(--green-deep);transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+  .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.65);}
+  .btn-ghost:hover{background:rgba(255,255,255,.14);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--white);transform:translateY(-2px);}
+  .btn-sm{padding:12px 22px;font-size:.82rem;}
+  .btn-block{width:100%;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.1s;}
+  .reveal-delay-2{transition-delay:.2s;}
+  .reveal-delay-3{transition-delay:.3s;}
+  .reveal-delay-4{transition-delay:.4s;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+    .ticker-track{animation-duration:34s !important;}
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:22px 0;
+    transition:background .4s var(--ease),padding .4s var(--ease),box-shadow .4s var(--ease);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  header.solid{background:rgba(253,251,246,.92);backdrop-filter:blur(10px);padding:14px 0;box-shadow:0 1px 0 rgba(35,31,23,.08);}
+  .logo{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;letter-spacing:.02em;
+    color:var(--white);transition:color .4s ease;
+  }
+  header.solid .logo{color:var(--ink);}
+  .logo span{color:var(--green);}
+  nav.main-nav{display:flex;align-items:center;gap:36px;}
+  nav.main-nav a{
+    font-size:.88rem;font-weight:600;color:rgba(255,255,255,.86);
+    transition:color .4s ease;position:relative;
+  }
+  header.solid nav.main-nav a{color:var(--ink-soft);}
+  nav.main-nav a:hover{color:var(--white);}
+  header.solid nav.main-nav a:hover{color:var(--ink);}
+  .header-actions{display:flex;align-items:center;gap:14px;}
+  header.solid .btn-ghost{border-color:var(--ink);color:var(--ink);}
+  header.solid .btn-ghost:hover{background:var(--ink);color:var(--white);}
+  .burger{display:none;width:26px;height:20px;position:relative;flex-direction:column;justify-content:space-between;}
+  .burger span{display:block;height:2px;width:100%;background:var(--white);transition:all .3s ease;}
+  header.solid .burger span{background:var(--ink);}
+  @media(max-width:900px){
+    nav.main-nav{position:fixed;top:0;right:0;height:100vh;width:min(320px,80vw);
+      background:var(--bg);flex-direction:column;align-items:flex-start;justify-content:center;gap:26px;
+      padding:40px;transform:translateX(100%);transition:transform .5s var(--ease);box-shadow:-10px 0 40px rgba(0,0,0,.15);}
+    nav.main-nav.open{transform:translateX(0);}
+    nav.main-nav a{color:var(--ink);font-size:1.1rem;}
+    .header-actions .btn-ghost{display:none;}
+    .burger{display:flex;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;display:flex;align-items:flex-end;
+    background:
+      linear-gradient(180deg,rgba(20,20,12,.35) 0%, rgba(20,20,12,.15) 30%, rgba(18,17,10,.75) 100%),
+      url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    padding:160px 0 90px;
+  }
+  .hero-inner{max-width:640px;}
+  .hero h1{
+    color:var(--white);font-size:clamp(2.4rem,5.4vw,4.4rem);line-height:1.06;
+    font-weight:600;
+  }
+  .hero p.sub{
+    color:rgba(255,255,255,.88);font-size:1.15rem;margin-top:22px;max-width:480px;font-weight:500;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:38px;}
+  .ticker{
+    margin-top:64px;overflow:hidden;border-top:1px solid rgba(255,255,255,.25);padding-top:22px;
+    width:100%;max-width:100%;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  }
+  .ticker-track{display:flex;gap:36px;white-space:nowrap;width:max-content;max-width:none;animation:scrollTicker 34s linear infinite;will-change:transform;}
+  .ticker-track span{color:rgba(255,255,255,.72);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+  .ticker-track span::after{content:"·";margin-left:36px;color:var(--green);}
+  @keyframes scrollTicker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- how it works ---------- */
+  .how{background:var(--beige);padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin-top:16px;}
+  .section-head p{color:var(--ink-soft);margin-top:18px;font-size:1.05rem;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;}
+  .step-card{
+    background:var(--white);border-radius:var(--radius-lg);padding:44px 36px;
+    box-shadow:var(--shadow-sm);
+  }
+  .step-num{
+    font-family:'Playfair Display',serif;font-size:3.2rem;color:var(--beige-deep);font-weight:700;line-height:1;
+  }
+  .step-card h3{font-size:1.3rem;margin-top:22px;}
+  .step-card p{color:var(--ink-soft);margin-top:12px;font-size:.98rem;}
+  @media(max-width:900px){.steps{grid-template-columns:1fr;}}
+
+  /* ---------- subscriptions ---------- */
+  .plans{background:var(--bg);padding:120px 0;}
+  .plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+  .plan-card{
+    border:1.5px solid var(--beige-deep);border-radius:var(--radius-lg);padding:38px 30px;
+    display:flex;flex-direction:column;background:var(--white);
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+    position:relative;overflow:hidden;
+  }
+  .plan-card:hover{transform:translateY(-8px);box-shadow:var(--shadow);border-color:transparent;}
+  .plan-card.featured{background:var(--green-deep);border-color:var(--green-deep);color:var(--white);}
+  .plan-badge{
+    position:absolute;top:22px;right:-38px;transform:rotate(38deg);
+    background:var(--green);color:var(--white);font-size:.68rem;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;padding:5px 44px;
+  }
+  .plan-name{font-size:1.55rem;}
+  .plan-tag{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-top:6px;display:block;}
+  .plan-card.featured .plan-tag{color:var(--beige-deep);}
+  .plan-desc{margin-top:16px;color:var(--ink-soft);font-size:.92rem;min-height:64px;}
+  .plan-card.featured .plan-desc{color:rgba(255,255,255,.78);}
+  .plan-meta{margin-top:22px;padding-top:22px;border-top:1px solid var(--beige-deep);display:flex;flex-direction:column;gap:10px;}
+  .plan-card.featured .plan-meta{border-color:rgba(255,255,255,.25);}
+  .plan-meta-row{display:flex;justify-content:space-between;font-size:.86rem;}
+  .plan-meta-row b{font-weight:700;}
+  .plan-price{margin-top:24px;font-family:'Playfair Display',serif;font-size:1.7rem;}
+  .plan-price span{font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:600;color:var(--ink-soft);}
+  .plan-card.featured .plan-price span{color:rgba(255,255,255,.7);}
+  .plan-card .btn{margin-top:26px;}
+  @media(max-width:1100px){.plans-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.plans-grid{grid-template-columns:1fr;}}
+
+  /* ---------- menu ---------- */
+  .menu{background:var(--beige-soft);padding:120px 0;}
+  .menu-tabs{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;}
+  .menu-tab{
+    padding:11px 22px;border-radius:100px;border:1.5px solid var(--beige-deep);
+    font-size:.86rem;font-weight:700;color:var(--ink-soft);
+    transition:all .35s ease;background:var(--white);
+  }
+  .menu-tab:hover{border-color:var(--green);color:var(--green-deep);}
+  .menu-tab.active{background:var(--ink);border-color:var(--ink);color:var(--white);}
+  .dish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .dish-card{
+    background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);
+    transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+  }
+  .dish-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
+  .dish-photo{position:relative;aspect-ratio:4/3;background:var(--green-soft);overflow:hidden;}
+  .dish-photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);}
+  .dish-card:hover .dish-photo img{transform:scale(1.06);}
+  .dish-photo .fallback{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--green-soft),var(--beige));
+    font-family:'Playfair Display',serif;font-size:1rem;color:var(--green-deep);text-align:center;padding:20px;
+  }
+  .ring-badge{
+    position:absolute;left:16px;bottom:-24px;width:64px;height:64px;border-radius:50%;
+    background:var(--white);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;
+  }
+  .ring-badge .ring{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .ring-badge .ring-center{width:34px;height:34px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:800;color:var(--ink);}
+  .dish-body{padding:38px 24px 24px;}
+  .dish-body h4{font-size:1.18rem;}
+  .dish-body .kcal{font-size:.82rem;font-weight:700;color:var(--green-deep);white-space:nowrap;}
+  .dish-body .desc{color:var(--ink-soft);font-size:.9rem;margin-top:10px;min-height:44px;}
+  .macro-row{display:flex;gap:14px;margin-top:18px;padding-top:16px;border-top:1px solid var(--beige-soft);}
+  .macro{font-size:.76rem;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .macro i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .macro.p i{background:var(--green);}
+  .macro.f i{background:var(--gold);}
+  .macro.c i{background:var(--ink-soft);}
+  @media(max-width:1000px){.dish-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.dish-grid{grid-template-columns:1fr;}}
+
+  /* ---------- why ---------- */
+  .why{background:var(--bg);padding:120px 0;}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .why-card{padding:6px 0;}
+  .why-icon{width:52px;height:52px;border-radius:50%;background:var(--green-soft);display:flex;align-items:center;justify-content:center;color:var(--green-deep);}
+  .why-card h3{font-size:1.15rem;margin-top:22px;}
+  .why-card p{color:var(--ink-soft);font-size:.92rem;margin-top:10px;}
+  @media(max-width:900px){.why-grid{grid-template-columns:repeat(2,1fr);row-gap:44px;}}
+  @media(max-width:560px){.why-grid{grid-template-columns:1fr;}}
+
+  /* ---------- testimonials ---------- */
+  .testi{background:var(--beige);padding:120px 0;}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .testi-card{background:var(--white);border-radius:var(--radius-lg);padding:38px 32px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+  .testi-quote{font-family:'Playfair Display',serif;font-size:2.6rem;color:var(--beige-deep);line-height:1;}
+  .testi-text{margin-top:8px;font-size:.98rem;color:var(--ink);flex:1;}
+  .testi-person{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:22px;border-top:1px solid var(--beige-soft);}
+  .avatar{width:46px;height:46px;border-radius:50%;background:var(--green-deep);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:600;}
+  .testi-person b{display:block;font-size:.94rem;}
+  .testi-person span{display:block;font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
+  @media(max-width:900px){.testi-grid{grid-template-columns:1fr;}}
+
+  /* ---------- contacts ---------- */
+  .contacts{background:var(--green-deep);color:var(--white);padding:110px 0 60px;}
+  .contacts-top{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:60px;}
+  .contacts h2{color:var(--white);font-size:clamp(1.9rem,3vw,2.5rem);}
+  .contacts .lead{margin-top:16px;color:rgba(255,255,255,.75);font-size:1rem;max-width:400px;}
+  .c-col h4{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--beige-deep);margin-bottom:18px;}
+  .c-col p, .c-col a{display:block;color:rgba(255,255,255,.85);font-size:.95rem;margin-bottom:10px;transition:color .3s ease;}
+  .c-col a:hover{color:var(--white);}
+  .social-row{display:flex;gap:14px;margin-top:6px;}
+  .social-row a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin:0;}
+  .social-row a:hover{background:rgba(255,255,255,.12);}
+  .contacts-bottom{margin-top:80px;padding-top:26px;border-top:1px solid rgba(255,255,255,.18);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .contacts-bottom .flogo{font-family:'Playfair Display',serif;font-size:1.2rem;}
+  .contacts-bottom small{color:rgba(255,255,255,.55);font-size:.8rem;}
+  @media(max-width:900px){.contacts-top{grid-template-columns:1fr;gap:40px;}}
+
+  .toast{
+    position:fixed;left:50%;bottom:32px;transform:translate(-50%,140%);
+    background:var(--ink);color:var(--white);padding:16px 26px;border-radius:100px;
+    font-size:.88rem;font-weight:600;box-shadow:var(--shadow);z-index:300;
+    transition:transform .5s var(--ease);
+  }
+  .toast.show{transform:translate(-50%,0);}
+
+  /* ---------- ambient decoration (desktop only) ---------- */
+  .hero .wrap, .why .wrap, .contacts .wrap{position:relative;z-index:1;}
+  .deco-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;display:none;}
+  @media(min-width:901px){
+    .deco-layer{display:block;}
+    .deco-blob{position:absolute;border-radius:50%;filter:blur(60px);animation:decoFloat 20s ease-in-out infinite;}
+    @keyframes decoFloat{
+      0%,100%{transform:translate(0,0) scale(1);}
+      50%{transform:translate(-26px,28px) scale(1.06);}
+    }
+    .deco-blob--hero-1{width:440px;height:440px;top:-140px;right:-120px;
+      background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.5), rgba(255,255,255,0) 70%);
+      animation-duration:22s;}
+    .deco-blob--hero-2{width:260px;height:260px;bottom:-90px;left:-60px;
+      background:radial-gradient(circle at 40% 40%, var(--gold), transparent 70%);
+      opacity:.3;animation-duration:26s;animation-delay:-8s;}
+    .deco-blob--why{width:380px;height:380px;left:-130px;bottom:-160px;
+      background:radial-gradient(circle at 40% 40%, var(--green), transparent 70%);
+      opacity:.2;animation-duration:24s;}
+    .deco-blob--contacts{width:400px;height:400px;right:-110px;top:-40px;
+      background:radial-gradient(circle at 40% 40%, var(--beige-deep), transparent 70%);
+      opacity:.25;animation-duration:28s;}
+  }
+
+  /* ---------- week example ---------- */
+  .week{background:var(--beige);padding:120px 0;}
+  .week-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;}
+  .week-tab{padding:10px 20px;border-radius:100px;border:1.5px solid var(--beige-deep);font-size:.82rem;font-weight:700;color:var(--ink-soft);background:var(--white);transition:all .35s ease;}
+  .week-tab:hover{border-color:var(--green);color:var(--green-deep);}
+  .week-tab.active{background:var(--ink);border-color:var(--ink);color:var(--white);}
+  .week-plan{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
+  .week-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 28px;border-bottom:1px solid var(--beige-soft);}
+  .week-row:last-child{border-bottom:none;}
+  .week-meal{display:flex;align-items:center;gap:16px;min-width:0;}
+  .week-meal-tag{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);background:var(--green-soft);padding:6px 12px;border-radius:100px;white-space:nowrap;flex:0 0 auto;}
+  .week-dish{font-weight:600;font-size:.96rem;}
+  .week-kcal{font-size:.86rem;color:var(--ink-soft);font-weight:700;white-space:nowrap;flex:0 0 auto;}
+  .week-total{display:flex;justify-content:space-between;padding:20px 28px;font-weight:700;background:var(--green-soft);color:var(--green-deep);}
+  @media(max-width:600px){.week-meal{flex-wrap:wrap;}.week-dish{width:100%;}}
+
+  /* ---------- team ---------- */
+  .team{background:var(--beige-soft);padding:120px 0;}
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .team-card{background:var(--white);border-radius:var(--radius-lg);padding:34px 30px;box-shadow:var(--shadow-sm);}
+  .team-card .avatar{width:56px;height:56px;font-size:1.1rem;}
+  .team-card h3{font-size:1.1rem;margin-top:18px;}
+  .team-role{display:block;font-size:.76rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--green-deep);margin-top:4px;}
+  .team-card p{color:var(--ink-soft);font-size:.9rem;margin-top:14px;}
+  @media(max-width:900px){.team-grid{grid-template-columns:1fr;}}
+
+  /* ---------- gallery ---------- */
+  .gallery{background:var(--bg);padding:100px 0 110px;}
+  .gallery-strip{display:flex;gap:20px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+  .gallery-strip::-webkit-scrollbar{height:6px;}
+  .gallery-strip::-webkit-scrollbar-thumb{background:var(--beige-deep);border-radius:100px;}
+  .gallery-item{position:relative;flex:0 0 auto;width:260px;aspect-ratio:3/4;border-radius:var(--radius-md);overflow:hidden;scroll-snap-align:start;}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;}
+  .gallery-item::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55));}
+  .gallery-item span{position:absolute;left:14px;bottom:14px;color:var(--white);font-family:'Playfair Display',serif;font-size:1rem;z-index:1;}
+  @media(max-width:600px){.gallery-item{width:200px;}}
+
+  /* ---------- faq ---------- */
+  .faq{background:var(--bg);padding:120px 0;}
+  .faq-list{max-width:800px;}
+  .faq-item{border-bottom:1px solid var(--beige-deep);padding:22px 0;}
+  .faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;font-weight:700;font-size:1.02rem;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-plus{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--beige-deep);position:relative;flex:0 0 auto;transition:transform .35s var(--ease);}
+  .faq-plus::before,.faq-plus::after{content:"";position:absolute;background:var(--ink);}
+  .faq-plus::before{left:50%;top:20%;bottom:20%;width:1.5px;margin-left:-.75px;}
+  .faq-plus::after{top:50%;left:20%;right:20%;height:1.5px;margin-top:-.75px;}
+  .faq-item[open] .faq-plus{transform:rotate(45deg);}
+  .faq-answer{color:var(--ink-soft);font-size:.94rem;margin-top:14px;line-height:1.7;max-width:640px;}
+
+  /* ---------- map ---------- */
+  .map-embed{margin-top:56px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(255,255,255,.18);}
+  .map-embed iframe{width:100%;height:300px;border:0;display:block;filter:grayscale(45%) contrast(1.05) brightness(.95);}
+
+  /* ---------- mobile phones (320–600px) ---------- */
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+
+    header{padding:16px 0;}
+    header.solid{padding:12px 0;}
+    .logo{font-size:1.3rem;}
+
+    .hero{padding:120px 0 56px;min-height:100svh;}
+    .hero-inner{max-width:100%;}
+    .hero h1{font-size:clamp(2rem,8.5vw,2.6rem);}
+    .hero p.sub{font-size:1rem;max-width:100%;}
+    .hero-actions{gap:12px;}
+    .ticker{margin-top:44px;}
+    .ticker-track span{font-size:.78rem;}
+    .ticker-track span::after{margin-left:24px;}
+
+    .btn{padding:14px 22px;font-size:.86rem;}
+
+    .how,.plans,.menu,.why,.testi,.week,.team,.faq{padding:64px 0;}
+    .gallery{padding:64px 0 72px;}
+    .contacts{padding:64px 0 40px;}
+    .section-head{margin-bottom:36px;}
+    .section-head p{font-size:.96rem;}
+
+    .step-card{padding:28px 22px;}
+    .step-num{font-size:2.5rem;}
+
+    .plan-card{padding:28px 22px;}
+    .plan-badge{top:18px;right:-42px;padding:5px 46px;}
+
+    .menu-tabs,.week-tabs{gap:10px;margin-bottom:32px;}
+    .menu-tab{padding:10px 18px;font-size:.8rem;}
+    .dish-body{padding:34px 20px 20px;}
+    .macro-row{flex-wrap:wrap;row-gap:8px;}
+    .week-row{padding:16px 20px;}
+
+    .why-grid{row-gap:36px;}
+
+    .testi-card,.team-card{padding:28px 22px;}
+
+    .contacts-top{gap:36px;}
+    .contacts-bottom{margin-top:48px;}
+    .map-embed{margin-top:40px;}
+    .map-embed iframe{height:230px;}
+
+    nav.main-nav{width:min(300px,84vw);padding:32px 26px;gap:22px;}
+  }
+
+  @media(max-width:360px){
+    .wrap{padding:0 14px;}
+    .hero h1{font-size:1.9rem;}
+    .plan-badge{right:-46px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <a href="#top" class="logo">Balance<span>.</span></a>
+    <nav class="main-nav" id="mainNav">
+      <a href="#how" class="nav-link">Как это работает</a>
+      <a href="#plans" class="nav-link">Подписки</a>
+      <a href="#menu" class="nav-link">Меню</a>
+      <a href="#why" class="nav-link">Почему Balance</a>
+      <a href="#contacts" class="nav-link">Контакты</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#plans" class="btn btn-ghost btn-sm">Выбрать подписку</a>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="deco-layer" aria-hidden="true">
+      <span class="deco-blob deco-blob--hero-1"></span>
+      <span class="deco-blob deco-blob--hero-2"></span>
+    </div>
+    <div class="wrap hero-inner">
+      <h1 class="reveal in">Здоровое питание,<br>которое освобождает<br>ваше время</h1>
+      <p class="sub reveal in reveal-delay-1">Готовые сбалансированные блюда для спорта, здоровья и активного образа жизни. Мы берём готовку на себя — вы получаете время и результат.</p>
+      <div class="hero-actions reveal in reveal-delay-2">
+        <a href="#menu" class="btn btn-primary">Посмотреть меню</a>
+        <a href="#plans" class="btn btn-ghost">Выбрать подписку</a>
+      </div>
+      <div class="ticker reveal in reveal-delay-3">
+        <div class="ticker-track" id="tickerTrack"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Как это работает</span>
+        <h2>Три шага между вами и&nbsp;тарелкой без компромиссов</h2>
+        <p>Мы убрали из процесса всё лишнее — планирование, закупки, готовку и мытьё посуды. Осталось только то, что важно: свежая еда вовремя.</p>
+      </div>
+      <div class="steps">
+        <div class="step-card reveal reveal-delay-1">
+          <span class="step-num">01</span>
+          <h3>Выберите программу питания</h3>
+          <p>Расскажите о цели — снижение веса, тренировки или профессиональный спорт — и подберите подходящую подписку или отдельные блюда из меню.</p>
+        </div>
+        <div class="step-card reveal reveal-delay-2">
+          <span class="step-num">02</span>
+          <h3>Мы готовим и рассчитываем КБЖУ</h3>
+          <p>Шеф-повара и нутрициологи Balance готовят блюда из свежих продуктов и точно рассчитывают калорийность и баланс белков, жиров и углеводов.</p>
+        </div>
+        <div class="step-card reveal reveal-delay-3">
+          <span class="step-num">03</span>
+          <h3>Получайте еду и экономьте время</h3>
+          <p>Доставка приезжает по расписанию — остаётся только разогреть. Никакой готовки, планирования и лишних решений в течение дня.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBSCRIPTIONS -->
+  <section class="plans" id="plans">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Подписки</span>
+        <h2>Программа питания под вашу цель</h2>
+        <p>Каждая подписка — это заранее рассчитанный рацион на неделю или месяц. Можно приостановить, изменить или отменить в любой момент.</p>
+      </div>
+      <div class="plans-grid" id="plansGrid"></div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Меню ресторана</span>
+        <h2>Каждое блюдо — точный баланс вкуса и&nbsp;пользы</h2>
+        <p>Можно заказать отдельные позиции или собрать рацион внутри подписки. У каждого блюда — прозрачный состав и расчёт КБЖУ.</p>
+      </div>
+      <div class="menu-tabs" id="menuTabs"></div>
+      <div class="dish-grid" id="dishGrid"></div>
+    </div>
+  </section>
+
+  <!-- WEEK EXAMPLE -->
+  <section class="week" id="week">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Пример недели</span>
+        <h2>Так выглядит ваша неделя на Balance Sport</h2>
+        <p>Четыре приёма пищи в день с точным расчётом калорий — выберите день и посмотрите на реальный рацион.</p>
+      </div>
+      <div class="week-tabs" id="weekTabs"></div>
+      <div class="week-plan" id="weekPlan"></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why" id="why">
+    <div class="deco-layer" aria-hidden="true"><span class="deco-blob deco-blob--why"></span></div>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Почему Balance</span>
+        <h2>Ресторанное качество, дисциплина нутрициолога</h2>
+      </div>
+      <div class="why-grid" id="whyGrid"></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Команда</span>
+        <h2>Люди, которые готовят ваш баланс</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal reveal-delay-1">
+          <div class="avatar">АВ</div>
+          <h3>Анна Волкова</h3>
+          <span class="team-role">Шеф-повар Balance</span>
+          <p>Более 12 лет работает с концепцией здоровой кухни, отвечает за вкус, подачу и качество каждого блюда.</p>
+        </div>
+        <div class="team-card reveal reveal-delay-2">
+          <div class="avatar">СК</div>
+          <h3>Сергей Ким</h3>
+          <span class="team-role">Нутрициолог</span>
+          <p>Рассчитывает КБЖУ и следит за балансом рациона для каждой программы питания под конкретную цель.</p>
+        </div>
+        <div class="team-card reveal reveal-delay-3">
+          <div class="avatar">МИ</div>
+          <h3>Мария Ионеску</h3>
+          <span class="team-role">Руководитель доставки</span>
+          <p>Отвечает за то, чтобы еда приезжала свежей и точно по расписанию — каждый день, без исключений.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Галерея</span>
+        <h2>Блюда, которые говорят сами за себя</h2>
+      </div>
+      <div class="gallery-strip" id="galleryStrip"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi" id="testi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Отзывы</span>
+        <h2>Что говорят те, кто уже питается по Balance</h2>
+      </div>
+      <div class="testi-grid" id="testiGrid"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Вопросы и ответы</span>
+        <h2>Всё, что нужно знать перед заказом</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>Можно ли поставить подписку на паузу?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">Да, подписку можно приостановить на срок до 2 недель через личный кабинет или по звонку менеджеру — доставка возобновится с выбранной даты.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Как отменить подписку?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">Отмена доступна в любой момент без штрафов — просто предупредите нас минимум за 48 часов до следующей доставки.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Сколько хранится готовая еда?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">Все блюда хранятся в холодильнике до 4 дней и промаркированы датой приготовления и составом.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Есть ли вегетарианские блюда?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">Да, в каждой программе можно заменить блюда с мясом и рыбой на вегетарианские аналоги без потери баланса КБЖУ.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли изменить калорийность рациона?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">Да, при оформлении подписки укажите цель и параметры — мы скорректируем калорийность и порции индивидуально.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Как быстро приедет первый заказ?<span class="faq-plus"></span></summary>
+          <p class="faq-answer">При оформлении подписки до 18:00 первая доставка возможна уже на следующее утро.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="contacts" id="contacts">
+    <div class="deco-layer" aria-hidden="true"><span class="deco-blob deco-blob--contacts"></span></div>
+    <div class="wrap">
+      <div class="contacts-top">
+        <div class="reveal">
+          <span class="eyebrow" style="color:var(--beige-deep)">Контакты и доставка</span>
+          <h2>Здоровое питание,<br>которое экономит ваше время</h2>
+          <p class="lead">Готовые сбалансированные блюда и программы питания для тех,
+          кто хочет питаться правильно, заниматься спортом и успевать больше.</p>
+        </div>
+        <div class="c-col reveal reveal-delay-1">
+          <h4>Ресторан</h4>
+          <p>Тирасполь,Приднестровье </p>
+          <p>Ежедневно, 08:00–22:00</p>
+          <a href="tel:+37300000000">+373 (000) 00000</a>
+          <a href="mailto:hello@balance-food.md">hello@balance.md</a>
+        </div>
+        <div class="c-col reveal reveal-delay-2">
+          <h4>Доставка</h4>
+          <p>Доставка готовых блюд по Тирасполю</p>
+          <p>Доставка подписки — бесплатно</p>
+          <p>Разовый заказ — по тарифу доставки</p>
+          <h4 style="margin-top:26px;">Мы в соцсетях</h4>
+          <div class="social-row">
+            <a href="#" aria-label="Telegram">TG</a>
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="VK">VK</a>
+          </div>
+        </div>
+      </div>
+      <div class="map-embed reveal">
+        <iframe src="https://www.google.com/maps?q=Tiraspol&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Balance на карте"></iframe>
+      </div>
+      <div class="contacts-bottom">
+        <span class="flogo">Balance<span style="color:var(--beige-deep)">.</span></span>
+        <small>© 2026 Balance. Здоровое питание нового поколения.</small>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast">Заявка отправлена — мы свяжемся с вами</div>
+
+<script>
+/* ================= DATA ================= */
+const ingredients = ["Киноа","Лосось","Авокадо","Шпинат","Куриное филе","Батат","Черника","Миндаль","Брокколи","Индейка","Гречка","Имбирь"];
+
+const plans = [
+  {
+    name:"Balance Trial", tag:"Пробный месяц", featured:false,
+    desc:"Для знакомства с сервисом — попробуйте формат без долгих обязательств.",
+    meals:"2 приёма пищи / день", kcal:"1600–1800 ккал / день",
+    price:"1350 Р", period:"/ неделя"
+  },
+  {
+    name:"Balance Slim", tag:"Контроль веса", featured:false,
+    desc:"Для тех, кто хочет снижать вес без подсчёта калорий и жёстких диет.",
+    meals:"3 приёма пищи / день", kcal:"1400–1600 ккал / день",
+    price:"2250 Р", period:"/ неделя"
+  },
+  {
+    name:"Balance Sport", tag:"Популярный выбор", featured:true,
+    desc:"Для тех, кто регулярно тренируется и следит за балансом БЖУ.",
+    meals:"4 приёма пищи / день", kcal:"2200–2400 ккал / день",
+    price:"2750 Р", period:"/ неделя"
+  },
+  {
+    name:"Balance Pro", tag:"Высокая нагрузка", featured:false,
+    desc:"Для профессиональных спортсменов с высоким расходом энергии.",
+    meals:"5–6 приёмов пищи / день", kcal:"3000–3400 ккал / день",
+    price:"3250 Р", period:"/ неделя"
+  }
+];
+
+const IMG = {
+  oats:"./images/oat.png",
+  omlet:"./images/omlet.png",
+  yogurt:"./images/yogurt.png",
+  yogurt1:"./images/yogurt1.png",
+  bowl1:"./images/bowl1.png",
+  bowl2:"./images/bowl2.png",
+  bar:"./images/bar.png",
+  toast:"./images/toast.png",
+  fruit:"./images/fruit.png",
+  bowl3:"./images/bowl3.png",
+  salad:"./images/salad.png",
+  smoothie:"./images/smoothie.png",
+  salmon:"./images/salmon.png",
+  salmon1:"./images/salmon1.png",
+  meat:"./images/meat.png"
+};
+
+const menu = {
+  "Завтраки":[
+    {name:"Energy Oat Bowl", desc:"Овсянка на миндальном молоке с ягодами, семенами чиа и мёдом.", img:IMG.oats , kcal:320, p:12, f:9, c:48},
+    {name:"Protein Breakfast", desc:"Омлет из белка с индейкой, шпинатом и авокадо.", img:IMG.omlet, kcal:380, p:28, f:20, c:14},
+    {name:"Greek Morning", desc:"Греческий йогурт с гранолой, орехами и мёдом.", img:IMG.yogurt, kcal:340, p:18, f:14, c:36}
+  ],
+  "Основные блюда":[
+    {name:"Chicken Balance Bowl", desc:"Куриное филе гриль, киноа, овощи и соус тахини.", img:IMG.bowl1, kcal:460, p:38, f:14, c:46},
+    {name:"Salmon Green Bowl", desc:"Лосось на пару, брокколи, авокадо и кус-кус.", img:IMG.salmon, kcal:520, p:34, f:24, c:40},
+    {name:"Turkey Power Bowl", desc:"Индейка, батат, шпинат и соус на йогуртовой основе.", img:IMG.bowl2, kcal:440, p:36, f:12, c:42},
+    {name:"Asian Fitness Bowl", desc:"Говядина, рис басмати, овощи вок и кунжут.", img:IMG.bowl3, kcal:480, p:32, f:16, c:48}
+  ],
+  "Fitness питание":[
+    {name:"High Protein Chicken", desc:"Двойная порция курицы, гречка и сезонные овощи.", img:IMG.salad, kcal:560, p:52, f:12, c:46},
+    {name:"Mass Builder", desc:"Говядина, рис, авокадо и орехи для набора массы.", img:IMG.meat, kcal:720, p:48, f:26, c:68},
+    {name:"Recovery Salmon", desc:"Лосось, сладкий картофель, зелень и омега-3.", img:IMG.salmon1, kcal:540, p:38, f:22, c:38}
+  ],
+  "Напитки":[
+    {name:"Protein Smoothie", desc:"Банан, протеин, миндальное молоко и арахисовая паста.", img:IMG.smoothie, kcal:280, p:24, f:8, c:30},
+    {name:"Green Energy Smoothie", desc:"Шпинат, яблоко, огурец, имбирь и лайм.", img:IMG.fruit, kcal:160, p:3, f:1, c:34},
+    {name:"Berry Fresh", desc:"Ягоды, йогурт и семена льна.", img:IMG.yogurt1, kcal:210, p:9, f:4, c:36}
+  ],
+  "Полезные десерты":[
+    {name:"Protein Cheesecake", desc:"Творожный чизкейк на овсяной основе.", img:IMG.toast, kcal:260, p:18, f:10, c:24},
+    {name:"Energy Bar", desc:"Батончик с орехами, финиками и семенами.", img:IMG.bar, kcal:220, p:8, f:11, c:24}
+  ]
+};
+
+const whyItems = [
+  {title:"Правильный баланс нутриентов", text:"Каждое блюдо рассчитано нутрициологом по КБЖУ под вашу цель — без переизбытка и дефицита.",
+   icon:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>'},
+  {title:"Экономия времени", text:"Без планирования меню, закупок и готовки — просто разогрейте и ешьте в любой момент дня.",
+   icon:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v4H4zM4 20h16v-4H4zM8 8l8 8M16 8l-8 8"/></svg>'},
+  {title:"Свежие продукты", text:"Готовим ежедневно небольшими партиями из локальных фермерских продуктов без консервантов.",
+   icon:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c4 2 6 6 6 10a6 6 0 1 1-12 0c0-4 2-8 6-10Z"/></svg>'},
+  {title:"Поддержка ваших целей", text:"Меняйте программу в любой момент — от контроля веса до подготовки к соревнованиям.",
+   icon:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>'}
+];
+
+const testimonials = [
+  {name:"Игорь, 29", role:"Легкоатлет", init:"ИГ",
+   text:"Тренируюсь два раза в день и раньше половину времени уходила на готовку под нужный БЖУ. С Balance Sport я просто забираю еду и знаю точный расчёт калорий на каждый приём пищи."},
+  {name:"Мария, 34", role:"Похудела на 8 кг за 3 месяца", init:"МК",
+   text:"Пробовала диеты и срывалась — было невкусно и голодно. На Balance Slim я не считаю калории вручную и при этом вижу результат на весах, потому что порции уже сбалансированы."},
+  {name:"Дмитрий, 41", role:"Руководитель проекта", init:"ДВ",
+   text:"Обеды приезжают прямо в офис к 13:00. Больше не трачу обеденный перерыв на очереди в кафе — и при этом ем то, что действительно полезно, а не что попало под руку."}
+];
+
+const weekPlan = {
+  "Понедельник":[
+    {tag:"Завтрак", dish:"Protein Breakfast", kcal:380},
+    {tag:"Обед", dish:"Chicken Balance Bowl", kcal:460},
+    {tag:"Перекус", dish:"Protein Smoothie", kcal:280},
+    {tag:"Ужин", dish:"Salmon Green Bowl", kcal:520}
+  ],
+  "Вторник":[
+    {tag:"Завтрак", dish:"Greek Morning", kcal:340},
+    {tag:"Обед", dish:"Asian Fitness Bowl", kcal:480},
+    {tag:"Перекус", dish:"Energy Bar", kcal:220},
+    {tag:"Ужин", dish:"Turkey Power Bowl", kcal:440}
+  ],
+  "Среда":[
+    {tag:"Завтрак", dish:"Energy Oat Bowl", kcal:320},
+    {tag:"Обед", dish:"High Protein Chicken", kcal:560},
+    {tag:"Перекус", dish:"Berry Fresh", kcal:210},
+    {tag:"Ужин", dish:"Recovery Salmon", kcal:540}
+  ],
+  "Четверг":[
+    {tag:"Завтрак", dish:"Protein Breakfast", kcal:380},
+    {tag:"Обед", dish:"Chicken Balance Bowl", kcal:460},
+    {tag:"Перекус", dish:"Green Energy Smoothie", kcal:160},
+    {tag:"Ужин", dish:"Mass Builder", kcal:720}
+  ],
+  "Пятница":[
+    {tag:"Завтрак", dish:"Greek Morning", kcal:340},
+    {tag:"Обед", dish:"Salmon Green Bowl", kcal:520},
+    {tag:"Перекус", dish:"Protein Smoothie", kcal:280},
+    {tag:"Ужин", dish:"Asian Fitness Bowl", kcal:480}
+  ],
+  "Суббота":[
+    {tag:"Завтрак", dish:"Energy Oat Bowl", kcal:320},
+    {tag:"Обед", dish:"Turkey Power Bowl", kcal:440},
+    {tag:"Перекус", dish:"Protein Cheesecake", kcal:260},
+    {tag:"Ужин", dish:"High Protein Chicken", kcal:560}
+  ],
+  "Воскресенье":[
+    {tag:"Завтрак", dish:"Protein Breakfast", kcal:380},
+    {tag:"Обед", dish:"Recovery Salmon", kcal:540},
+    {tag:"Перекус", dish:"Energy Bar", kcal:220},
+    {tag:"Ужин", dish:"Chicken Balance Bowl", kcal:460}
+  ]
+};
+
+const galleryItems = [
+  {img:IMG.bowl1, name:"Chicken Balance Bowl"},
+  {img:IMG.salmon, name:"Salmon Green Bowl"},
+  {img:IMG.bowl3, name:"Asian Fitness Bowl"},
+  {img:IMG.salad, name:"High Protein Chicken"},
+  {img:IMG.smoothie, name:"Protein Smoothie"},
+  {img:IMG.toast, name:"Protein Cheesecake"},
+  {img:IMG.yogurt, name:"Greek Morning"},
+  {img:IMG.meat, name:"Mass Builder"}
+];
+
+/* ================= RENDER ================= */
+// ticker
+const track = document.getElementById('tickerTrack');
+const doubled = [...ingredients, ...ingredients];
+track.innerHTML = doubled.map(i=>`<span>${i}</span>`).join('');
+
+// plans
+const plansGrid = document.getElementById('plansGrid');
+plansGrid.innerHTML = plans.map((pl,i)=>`
+  <div class="plan-card ${pl.featured?'featured':''} reveal reveal-delay-${(i%4)+1}">
+    ${pl.featured?'<div class="plan-badge">Хит</div>':''}
+    <span class="plan-tag">${pl.tag}</span>
+    <h3 class="plan-name">${pl.name}</h3>
+    <p class="plan-desc">${pl.desc}</p>
+    <div class="plan-meta">
+      <div class="plan-meta-row"><span>Питание</span><b>${pl.meals}</b></div>
+      <div class="plan-meta-row"><span>Калорийность</span><b>${pl.kcal}</b></div>
+    </div>
+    <div class="plan-price">${pl.price} <span>${pl.period}</span></div>
+    <button class="btn ${pl.featured?'btn-primary':'btn-outline'} btn-block choose-plan" data-name="${pl.name}">Выбрать ${pl.name.split(' ')[1]}</button>
+  </div>
+`).join('');
+
+// menu tabs + dishes
+const categories = Object.keys(menu);
+const tabsEl = document.getElementById('menuTabs');
+const dishGrid = document.getElementById('dishGrid');
+
+function macroRingGradient(p,f,c){
+  const kcalP = p*4, kcalF = f*9, kcalC = c*4;
+  const total = kcalP+kcalF+kcalC || 1;
+  const pPct = kcalP/total*360;
+  const fPct = kcalF/total*360;
+  const pEnd = pPct;
+  const fEnd = pPct+fPct;
+  return `conic-gradient(var(--green) 0deg ${pEnd}deg, var(--gold) ${pEnd}deg ${fEnd}deg, var(--ink-soft) ${fEnd}deg 360deg)`;
+}
+
+function renderDishes(cat){
+  dishGrid.innerHTML = menu[cat].map((d,i)=>`
+    <div class="dish-card reveal reveal-delay-${(i%3)+1}">
+      <div class="dish-photo">
+        <img src="${d.img}" alt="${d.name}" loading="lazy"
+             onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex';">
+        <div class="fallback" style="display:none;">${d.name}</div>
+        <div class="ring-badge">
+          <div class="ring" style="background:${macroRingGradient(d.p,d.f,d.c)}">
+            <div class="ring-center">${d.kcal}</div>
+          </div>
+        </div>
+      </div>
+      <div class="dish-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+          <h4>${d.name}</h4>
+          <span class="kcal">${d.kcal} ккал</span>
+        </div>
+        <p class="desc">${d.desc}</p>
+        <div class="macro-row">
+          <span class="macro p"><i></i>Б ${d.p} г</span>
+          <span class="macro f"><i></i>Ж ${d.f} г</span>
+          <span class="macro c"><i></i>У ${d.c} г</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  requestAnimationFrame(observeReveals);
+}
+
+tabsEl.innerHTML = categories.map((c,i)=>`<button class="menu-tab ${i===1?'active':''}" data-cat="${c}">${c}</button>`).join('');
+tabsEl.addEventListener('click', e=>{
+  const btn = e.target.closest('.menu-tab');
+  if(!btn) return;
+  tabsEl.querySelectorAll('.menu-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDishes(btn.dataset.cat);
+});
+renderDishes(categories[1]);
+
+// why
+document.getElementById('whyGrid').innerHTML = whyItems.map((w,i)=>`
+  <div class="why-card reveal reveal-delay-${i+1}">
+    <div class="why-icon">${w.icon}</div>
+    <h3>${w.title}</h3>
+    <p>${w.text}</p>
+  </div>
+`).join('');
+
+// testimonials
+document.getElementById('testiGrid').innerHTML = testimonials.map((t,i)=>`
+  <div class="testi-card reveal reveal-delay-${i+1}">
+    <span class="testi-quote">"</span>
+    <p class="testi-text">${t.text}</p>
+    <div class="testi-person">
+      <div class="avatar">${t.init}</div>
+      <div><b>${t.name}</b><span>${t.role}</span></div>
+    </div>
+  </div>
+`).join('');
+
+// week plan
+const weekDays = Object.keys(weekPlan);
+const weekTabsEl = document.getElementById('weekTabs');
+const weekPlanEl = document.getElementById('weekPlan');
+
+function renderWeek(day){
+  const rows = weekPlan[day];
+  const total = rows.reduce((sum,r)=>sum+r.kcal,0);
+  weekPlanEl.innerHTML = rows.map(r=>`
+    <div class="week-row">
+      <div class="week-meal">
+        <span class="week-meal-tag">${r.tag}</span>
+        <span class="week-dish">${r.dish}</span>
+      </div>
+      <span class="week-kcal">${r.kcal} ккал</span>
+    </div>
+  `).join('') + `<div class="week-total"><span>Итого за день</span><span>${total} ккал</span></div>`;
+}
+
+weekTabsEl.innerHTML = weekDays.map((d,i)=>`<button class="week-tab ${i===0?'active':''}" data-day="${d}">${d}</button>`).join('');
+weekTabsEl.addEventListener('click', e=>{
+  const btn = e.target.closest('.week-tab');
+  if(!btn) return;
+  weekTabsEl.querySelectorAll('.week-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWeek(btn.dataset.day);
+});
+renderWeek(weekDays[0]);
+
+// gallery
+document.getElementById('galleryStrip').innerHTML = galleryItems.map(g=>`
+  <div class="gallery-item">
+    <img src="${g.img}" alt="${g.name}" loading="lazy">
+    <span>${g.name}</span>
+  </div>
+`).join('');
+
+/* ================= INTERACTIONS ================= */
+// header solid on scroll
+const header = document.getElementById('siteHeader');
+function onScroll(){
+  if(window.scrollY > 60) header.classList.add('solid');
+  else header.classList.remove('solid');
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+// burger menu
+const burger = document.getElementById('burger');
+const mainNav = document.getElementById('mainNav');
+burger.addEventListener('click', ()=>mainNav.classList.toggle('open'));
+mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>mainNav.classList.remove('open')));
+
+// toast
+const toast = document.getElementById('toast');
+function showToast(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toast.classList.remove('show'), 2600);
+}
+document.addEventListener('click', e=>{
+  const plan = e.target.closest('.choose-plan');
+  if(plan){ showToast(`Заявка на «${plan.dataset.name}» отправлена — мы свяжемся с вами`); }
+});
+
+// reveal on scroll
+function observeReveals(){
+  const els = document.querySelectorAll('.reveal:not(.in)');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  },{threshold:.15, rootMargin:"0px 0px -60px 0px"});
+  els.forEach(el=>io.observe(el));
+}
+observeReveals();
+</script>
+</body>
+</html>
